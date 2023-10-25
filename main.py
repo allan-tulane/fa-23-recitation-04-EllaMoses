@@ -3,9 +3,39 @@ import tabulate
 
 
 def qsort(a, pivot_fn):
-    ## TO DO
-    pass
+    if len(a) <= 1: #base case: if a is empty or size 1 it doesn't need to be sorted, return it
+        return a
+    else: #recursive case: if a has more than 1 element continue to call qsort until the base case is reached
+        p = pivot_fn(a) #find pivot using provided pivot function on list a
+        a1 = [] # will hold elements less than p, starts as an empty list
+        a2 = [] # will hold elements equal to p, starts as an empty list
+        a3 = [] # will hold elements greater than to p, starts as an empty list
+        # TRY TO FIND FASTER WAY TO ASSIGN ELEMENTS TO LISTS, USE RECURSION?
+        for element in a: #for each element in a, add it to one of the lists
+            if element < p:
+                a1.append(element)
+            elif element == p:
+                a2.append(element)
+            else:
+                a3.append(element)
+        s1 = qsort(a1, pivot_fn) #sort list of elements smaller than p using qsort
+        s2 = qsort(a3, pivot_fn) #sort list of elements greater than or equal to p using qsort
+        return s1 + a2 + s2 #combine the sorted sublists
     
+def qsort_fixed_pivot(a):
+    return qsort(a, lambda a: a[0])
+    
+def qsort_random_pivot(a):
+    return qsort(a, lambda a: random.choice(a))
+
+#provided in slides
+def selection_sort(L):
+    for i in range(len(L)):
+        m = L.index(min(L[i:]))
+        L[i], L[m] = L[m], L[i]
+    return L
+
+
 def time_search(sort_fn, mylist):
     """
     Return the number of milliseconds to run this
@@ -29,7 +59,8 @@ def time_search(sort_fn, mylist):
     return (time.time() - start) * 1000
     ###
 
-def compare_sort(sizes=[100, 200, 500, 1000, 2000, 5000, 10000, 20000, 50000, 100000]):
+
+def compare_sort(sizes=[10, 50, 100, 200, 500, 1000, 2000, 5000, 7500, 10000]): 
     """
     Compare the running time of different sorting algorithms.
 
@@ -40,32 +71,34 @@ def compare_sort(sizes=[100, 200, 500, 1000, 2000, 5000, 10000, 20000, 50000, 10
       for each method to run on each value of n
     """
     ### TODO - sorting algorithms for comparison
-    qsort_fixed_pivot = # 
-    qsort_random_pivot = #
-    tim_sort = #
     result = []
     for size in sizes:
         # create list in ascending order
         mylist = list(range(size))
         # shuffles list if needed
-        #random.shuffle(mylist)
+        random.shuffle(mylist)
         result.append([
             len(mylist),
             time_search(qsort_fixed_pivot, mylist),
-            time_search(qsort_random_pivot, mylist),
+            #time_search(qsort_random_pivot, mylist),
+            #time_search(selection_sort, mylist)
+            time_search(sorted, mylist)
         ])
     return result
     ###
 
+
 def print_results(results):
     """ change as needed for comparisons """
     print(tabulate.tabulate(results,
-                            headers=['n', 'qsort-fixed-pivot', 'qsort-random-pivot'],
+                            headers=['n', 'qsort-fixed-pivot', 'tim-sort'],
                             floatfmt=".3f",
                             tablefmt="github"))
 
 def test_print():
     print_results(compare_sort())
 
+
 random.seed()
 test_print()
+
