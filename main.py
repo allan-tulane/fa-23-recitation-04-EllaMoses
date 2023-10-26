@@ -10,7 +10,6 @@ def qsort(a, pivot_fn):
         a1 = [] # will hold elements less than p, starts as an empty list
         a2 = [] # will hold elements equal to p, starts as an empty list
         a3 = [] # will hold elements greater than to p, starts as an empty list
-        # TRY TO FIND FASTER WAY TO ASSIGN ELEMENTS TO LISTS, USE RECURSION?
         for element in a: #for each element in a, add it to one of the lists
             if element < p:
                 a1.append(element)
@@ -19,10 +18,10 @@ def qsort(a, pivot_fn):
             else:
                 a3.append(element)
         s1 = qsort(a1, pivot_fn) #sort list of elements smaller than p using qsort
-        s2 = qsort(a3, pivot_fn) #sort list of elements greater than or equal to p using qsort
+        s2 = qsort(a3, pivot_fn) #sort list of elements greater than p using qsort
         return s1 + a2 + s2 #combine the sorted sublists
     
-def qsort_fixed_pivot(a):
+def qsort_fixed_pivot(a): 
     return qsort(a, lambda a: a[0])
     
 def qsort_random_pivot(a):
@@ -60,7 +59,7 @@ def time_search(sort_fn, mylist):
     ###
 
 
-def compare_sort(sizes=[10, 50, 100, 200, 500, 1000, 2000, 5000, 7500, 10000]): 
+def compare_sort(sizes=[5, 10, 25, 50, 100, 200, 350, 500, 750, 900, 950, 990, 994]): 
     """
     Compare the running time of different sorting algorithms.
 
