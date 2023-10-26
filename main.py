@@ -1,5 +1,10 @@
 import random, time
-import tabulate
+#import tabulate 
+'''
+i have commented out tabulate because the github autograder was unable to import it when running test_main.py.
+since this function is only used to print the results, commenting this out does not affect the performance of quicksort which is tested in test_main.py
+'''
+
 
 
 def qsort(a, pivot_fn):
@@ -87,12 +92,17 @@ def compare_sort(sizes=[5, 10, 25, 50, 100, 200, 350, 500, 750, 900, 950, 990, 9
     ###
 
 
+# i have commented out the following functions in order to submit to github since the autograder can't import tabulate
+# These comments can be uncommented to run compare sort and print results, which i how i obtained the tabled in answers.md
+'''
 def print_results(results):
     """ change as needed for comparisons """
     print(tabulate.tabulate(results,
                             headers=['n', 'qsort-fixed-pivot', 'tim-sort'],
                             floatfmt=".3f",
                             tablefmt="github"))
+
+
 
 def test_print():
     print_results(compare_sort())
@@ -101,3 +111,4 @@ def test_print():
 random.seed()
 test_print()
 
+'''
